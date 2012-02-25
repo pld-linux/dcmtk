@@ -1,0 +1,35 @@
+--- dcmtk-3.6.0/CMake/GenerateDCMTKConfigure.cmake.orig	2010-12-20 13:50:53.000000000 +0100
++++ dcmtk-3.6.0/CMake/GenerateDCMTKConfigure.cmake	2012-02-24 19:16:43.263102766 +0100
+@@ -60,7 +60,7 @@
+     SET(DCM_DICT_DEFAULT_PATH "${DCM_DICT_DEFAULT_PATH}${ENVIRONMENT_PATH_SEPARATOR}${DCMTK_PREFIX}${INSTALL_DATDIR}${PATH_SEPARATOR}private.dic")
+   ENDIF(WITH_PRIVATE_TAGS)
+   # Set default directory for configuration and support data.
+-  SET(DCMTK_DEFAULT_CONFIGURATION_DIR "${DCMTK_PREFIX}${INSTALL_ETCDIR}${PATH_SEPARATOR}")
++  SET(DCMTK_DEFAULT_CONFIGURATION_DIR "${INSTALL_ETCDIR}${PATH_SEPARATOR}")
+   SET(DCMTK_DEFAULT_SUPPORT_DATA_DIR "${DCMTK_PREFIX}${INSTALL_DATDIR}${PATH_SEPARATOR}")
+ ENDIF(WIN32 AND NOT CYGWIN AND NOT MINGW)
+ 
+--- dcmtk-3.6.0/dcmnet/etc/CMakeLists.txt.orig	2005-09-15 10:15:05.000000000 +0200
++++ dcmtk-3.6.0/dcmnet/etc/CMakeLists.txt	2012-02-24 20:27:25.439911474 +0100
+@@ -1,2 +1,2 @@
+ # declare installation files
+-INSTALL_FILES(${INSTALL_ETCDIR} .cfg)
++INSTALL(FILES storescp.cfg storescu.cfg DESTINATION ${INSTALL_ETCDIR})
+--- dcmtk-3.6.0/dcmpstat/etc/CMakeLists.txt.orig	2005-09-15 10:17:44.000000000 +0200
++++ dcmtk-3.6.0/dcmpstat/etc/CMakeLists.txt	2012-02-24 20:28:25.083246806 +0100
+@@ -1,2 +1,2 @@
+ # declare installation files
+-INSTALL_FILES(${INSTALL_ETCDIR} .cfg)
++INSTALL(FILES dcmpstat.cfg printers.cfg DESTINATION ${INSTALL_ETCDIR})
+--- dcmtk-3.6.0/dcmqrdb/etc/CMakeLists.txt.orig	2005-09-15 10:19:37.000000000 +0200
++++ dcmtk-3.6.0/dcmqrdb/etc/CMakeLists.txt	2012-02-24 20:29:10.269914985 +0100
+@@ -1,2 +1,2 @@
+ # declare installation files
+-INSTALL_FILES(${INSTALL_ETCDIR} .cfg)
++INSTALL(FILES dcmqrscp.cfg DESTINATION ${INSTALL_ETCDIR})
+--- dcmtk-3.6.0/oflog/etc/CMakeLists.txt.orig	2009-08-19 13:52:17.000000000 +0200
++++ dcmtk-3.6.0/oflog/etc/CMakeLists.txt	2012-02-24 20:30:32.356584400 +0100
+@@ -1,2 +1,2 @@
+ # declare installation files
+-INSTALL_FILES(${INSTALL_ETCDIR} .cfg)
++INSTALL(FILES filelog.cfg logger.cfg DESTINATION ${INSTALL_ETCDIR})
