@@ -1,11 +1,13 @@
 # TODO:
-# - use system libjpeg? (8/12/16-bit versions)
+# - use system libjpeg? (rather hard: it needs 8/12/16-bit versions; included libijg*
+#   are libjpeg 6b with some arithmetic and lossless patches applied;
+#   libjpeg 8 already inclded arithmetic encoding support, but not lossless)
 #
 Summary:	DICOM Toolkit - implementation of DICOM/MEDICOM standard
 Summary(pl.UTF-8):	Narzędzia DICOM - implementacja standardu DICOM/MEDICOM
 Name:		dcmtk
 Version:	3.6.0
-Release:	0.1
+Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	ftp://dicom.offis.de/pub/dicom/offis/software/dcmtk/dcmtk360/%{name}-%{version}.tar.gz
