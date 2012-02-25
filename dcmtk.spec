@@ -23,6 +23,7 @@ Patch9:		%{name}-libi2d.patch
 Patch10:	%{name}-etc.patch
 URL:		http://dicom.offis.de/dcmtk
 BuildRequires:	CharLS-devel
+BuildRequires:	cmake >= 2.4
 BuildRequires:	libpng-devel >= 2:1.2.8
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel >= 3.7.0
