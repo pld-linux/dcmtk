@@ -7,7 +7,7 @@ Summary:	DICOM Toolkit - implementation of DICOM/MEDICOM standard
 Summary(pl.UTF-8):	Narzędzia DICOM - implementacja standardu DICOM/MEDICOM
 Name:		dcmtk
 Version:	3.6.0
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries
 Source0:	ftp://dicom.offis.de/pub/dicom/offis/software/dcmtk/dcmtk360/%{name}-%{version}.tar.gz
@@ -23,6 +23,7 @@ Patch7:		%{name}-0007-Add-soname-generation-for-modules-which-are-not-in-D.patch
 Patch8:		%{name}-link.patch
 Patch9:		%{name}-libi2d.patch
 Patch10:	%{name}-etc.patch
+Patch11:	%{name}-0008-Compiler-Fixes.patch
 URL:		http://dicom.offis.de/dcmtk
 BuildRequires:	CharLS-devel
 BuildRequires:	cmake >= 2.4
@@ -81,6 +82,7 @@ Pliki nagłówkowe bibliotek DCMTK.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # enforce system CharLS
 %{__rm} -r dcmjpls/libcharls
