@@ -1,0 +1,34 @@
+From 356494231c72c30d4cfa17559891863c1c0c483b Mon Sep 17 00:00:00 2001
+From: Mario Ceresa <mario.ceresa@upf.edu>
+Date: Mon, 15 Dec 2014 14:26:11 +0100
+Subject: [PATCH] Use cmake suggested location for CharLS
+
+---
+ dcmjpls/apps/CMakeLists.txt   | 2 +-
+ dcmjpls/libsrc/CMakeLists.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dcmjpls/apps/CMakeLists.txt b/dcmjpls/apps/CMakeLists.txt
+index 2e881d7..6170f8a 100644
+--- a/dcmjpls/apps/CMakeLists.txt
++++ b/dcmjpls/apps/CMakeLists.txt
+@@ -8,5 +8,5 @@ ENDFOREACH(PROGRAM)
+ 
+ # make sure executables are linked to the corresponding libraries
+ FOREACH(PROGRAM dcmcjpls dcmdjpls dcml2pnm)
+-  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls charls dcmimage dcmimgle dcmdata oflog ofstd ofstd)
++  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls ${CHARLS_LIBS} dcmimage dcmimgle dcmdata oflog ofstd ofstd)
+ ENDFOREACH(PROGRAM)
+diff --git a/dcmjpls/libsrc/CMakeLists.txt b/dcmjpls/libsrc/CMakeLists.txt
+index 8a7b4e8..dc3ff44 100644
+--- a/dcmjpls/libsrc/CMakeLists.txt
++++ b/dcmjpls/libsrc/CMakeLists.txt
+@@ -4,4 +4,4 @@ INCLUDE_DIRECTORIES(${dcmjpls_SOURCE_DIR}/include ${ofstd_SOURCE_DIR}/include ${
+ # create library from source files
+ DCMTK_ADD_LIBRARY(dcmjpls djcparam djdecode djencode djrparam djcodecd djutils djcodece)
+ 
+-DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage charls)
++DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage ${CHARLS_LIBS})
+-- 
+1.9.3
+

@@ -1,0 +1,37 @@
+From 9cc2c06d89d357a22065913abb0ab3ccda5a732b Mon Sep 17 00:00:00 2001
+From: Mario Ceresa <mario.ceresa@upf.edu>
+Date: Mon, 15 Dec 2014 12:22:00 +0100
+Subject: [PATCH] Find and include CharLS
+
+---
+ CMake/3rdparty.cmake | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/CMake/3rdparty.cmake b/CMake/3rdparty.cmake
+index 9fcca77..2ccda35 100755
+--- a/CMake/3rdparty.cmake
++++ b/CMake/3rdparty.cmake
+@@ -267,6 +267,20 @@ ELSE(WIN32)
+     ENDIF(NOT WRAP_FOUND)
+   ENDIF(DCMTK_WITH_WRAP)
+ 
++  SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
++  
++  IF(DCMTK_WITH_CHARLS)
++    FIND_PACKAGE(CharLS)
++    INCLUDE_DIRECTORIES(${CHARLS_INCLUDE_DIRS})
++    SET(CHARLS_LIBS ${CHARLS_LIBRARIES})
++    IF (NOT CHARLS_LIBS)
++      MESSAGE(STATUS "Warning: CharLS not found. Cannot build!")
++    ELSE(NOT CHARLS_LIBS)
++      MESSAGE(STATUS "Info: DCMTK CHARLS support will be enabled")
++      SET(WITH_CHARLS 1)
++    ENDIF(NOT CHARLS_LIBS)
++  ENDIF(DCMTK_WITH_CHARLS)
++
+ ENDIF()
+ 
+ # Find doxygen
+-- 
+1.9.3
+

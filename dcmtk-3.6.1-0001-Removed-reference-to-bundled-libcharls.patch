@@ -1,0 +1,24 @@
+From 6996b93b9ea3721ae970e4984d617fe050cd3b02 Mon Sep 17 00:00:00 2001
+From: Mario Ceresa <mario.ceresa@upf.edu>
+Date: Mon, 15 Dec 2014 12:00:53 +0100
+Subject: [PATCH] Removed reference to bundled libcharls
+
+---
+ dcmjpls/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dcmjpls/CMakeLists.txt b/dcmjpls/CMakeLists.txt
+index e114663..c92ac5b 100644
+--- a/dcmjpls/CMakeLists.txt
++++ b/dcmjpls/CMakeLists.txt
+@@ -2,6 +2,6 @@
+ PROJECT(dcmjpls)
+ 
+ # recurse into subdirectories
+-FOREACH(SUBDIR libsrc libcharls apps include)
++FOREACH(SUBDIR libsrc apps include)
+   ADD_SUBDIRECTORY(${SUBDIR})
+ ENDFOREACH(SUBDIR)
+-- 
+1.9.3
+

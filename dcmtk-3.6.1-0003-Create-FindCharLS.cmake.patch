@@ -1,0 +1,53 @@
+From a86cb1e1d622951d8345f0283837b20d8df707d0 Mon Sep 17 00:00:00 2001
+From: Mario Ceresa <mario.ceresa@upf.edu>
+Date: Mon, 15 Dec 2014 12:28:55 +0100
+Subject: [PATCH] Create FindCharLS.cmake
+
+---
+ CMake/FindCharLS.cmake | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+ create mode 100644 CMake/FindCharLS.cmake
+
+diff --git a/CMake/FindCharLS.cmake b/CMake/FindCharLS.cmake
+new file mode 100644
+index 0000000..eaa45b7
+--- /dev/null
++++ b/CMake/FindCharLS.cmake
+@@ -0,0 +1,34 @@
++FIND_PATH(CHARLS_INCLUDE_DIR CharLS/interface.h
++/usr/local/include
++/usr/include
++)
++
++FIND_LIBRARY(CHARLS_LIBRARY
++  NAMES CharLS
++  PATHS /usr/lib /usr/local/lib /usr/lib64 /usr/local/lib64
++  )
++
++
++IF (CHARLS_LIBRARY AND CHARLS_INCLUDE_DIR)
++    SET(CHARLS_LIBRARIES ${CHARLS_LIBRARY})
++    SET(CHARLS_INCLUDE_DIRS ${CHARLS_INCLUDE_DIR})
++    SET(CHARLS_FOUND "YES")
++ELSE (CHARLS_LIBRARY AND CHARLS_INCLUDE_DIR)
++  SET(CHARLS_FOUND "NO")
++ENDIF (CHARLS_LIBRARY AND CHARLS_INCLUDE_DIR)
++
++
++IF (CHARLS_FOUND)
++   IF (NOT CHARLS_FIND_QUIETLY)
++      MESSAGE(STATUS "Found CHARLS: ${CHARLS_LIBRARIES}")
++   ENDIF (NOT CHARLS_FIND_QUIETLY)
++ELSE (CHARLS_FOUND)
++   IF (CHARLS_FIND_REQUIRED)
++      MESSAGE(FATAL_ERROR "Could not find CHARLS library")
++   ENDIF (CHARLS_FIND_REQUIRED)
++ENDIF (CHARLS_FOUND)
++
++MARK_AS_ADVANCED(
++  CHARLS_LIBRARIES
++  CHARLS_INCLUDE_DIR
++  )
+-- 
+1.9.3
+
