@@ -20,10 +20,10 @@ Patch3:		%{name}-3.6.1-0003-Create-FindCharLS.cmake.patch
 Patch4:		%{name}-3.6.1-0004-Use-cmake-suggested-location-for-CharLS.patch
 Patch5:		%{name}-etc.patch
 URL:		http://dicom.offis.de/dcmtk
-BuildRequires:	CharLS-devel
+BuildRequires:	CharLS-devel < 2.0
 BuildRequires:	cmake >= 2.4
 BuildRequires:	libpng-devel >= 2:1.2.8
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.8.1
 BuildRequires:	libtiff-devel >= 3.7.0
 BuildRequires:	libwrap-devel
 BuildRequires:	libxml2-devel >= 1:2.6.26
@@ -44,6 +44,7 @@ implementujących część standardu DICOM/MEDICOM.
 Summary:	DICOM ToolKit shared libraries
 Summary(pl.UTF-8):	Biblioteki współdzielone DICOM
 Group:		Libraries
+Requires:	libstdc++ >= 6:4.8.1
 
 %description libs
 DICOM ToolKit shared libraries.
@@ -56,7 +57,7 @@ Summary:	Header files for DCMTK libraries
 Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek DCMTK
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	libstdc++-devel
+Requires:	libstdc++-devel >= 6:4.8.1
 
 %description devel
 Header files for DCMTK libraries.
@@ -83,6 +84,7 @@ Pliki nagłówkowe bibliotek DCMTK.
 	-DDCMTK_INSTALL_CMKDIR=%{_lib}/cmake/dcmtk \
 	-DBUILD_APPS:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DDCMTK_USE_CXX11_STL:BOOL=ON \
 	-DDCMTK_WITH_OPENSSL:BOOL=ON \
 	-DDCMTK_WITH_PNG:BOOL=ON \
 	-DDCMTK_WITH_PRIVATE_TAGS:BOOL=ON \
