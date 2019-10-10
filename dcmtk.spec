@@ -7,7 +7,7 @@ Summary:	DICOM To:olkit - implementation of DICOM/MEDICOM standard
 Summary(pl.UTF-8):	Narzędzia DICOM - implementacja standardu DICOM/MEDICOM
 Name:		dcmtk
 Version:	3.6.3
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries
 Source0:	ftp://dicom.offis.de/pub/dicom/offis/software/dcmtk/dcmtk363/%{name}-%{version}.tar.gz
@@ -19,6 +19,7 @@ Patch3:		%{name}-3.6.1-0003-Create-FindCharLS.cmake.patch
 Patch4:		%{name}-3.6.1-0004-Use-cmake-suggested-location-for-CharLS.patch
 Patch5:		%{name}-etc.patch
 Patch6:		CharLS.patch
+Patch7:		%{name}-fixes.patch
 URL:		http://dicom.offis.de/dcmtk
 BuildRequires:	CharLS-devel < 2.0
 BuildRequires:	cmake >= 2.4
@@ -75,6 +76,7 @@ Pliki nagłówkowe bibliotek DCMTK.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # enforce system CharLS
 %{__rm} -r dcmjpls/libcharls
