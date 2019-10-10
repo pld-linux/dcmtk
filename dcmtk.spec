@@ -22,6 +22,7 @@ Patch6:		CharLS.patch
 URL:		http://dicom.offis.de/dcmtk
 BuildRequires:	CharLS-devel < 2.0
 BuildRequires:	cmake >= 2.4
+BuildRequires:	libicu-devel
 BuildRequires:	libpng-devel >= 2:1.2.8
 BuildRequires:	libstdc++-devel >= 6:4.8.1
 BuildRequires:	libtiff-devel >= 3.7.0
