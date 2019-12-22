@@ -1,3 +1,7 @@
+NOTE: system CharLS doesn't dynamically grow output buffer; but the calls below have
+buffers allocated for uncompressed_size+1024 bytes, so it's unlikely compressed data
+won't fit (if so, CharLS throws exception).
+
 --- dcmtk-3.6.3/dcmjpls/libsrc/djcodece.cc~	2018-09-20 10:38:14.000000000 +0200
 +++ dcmtk-3.6.3/dcmjpls/libsrc/djcodece.cc	2018-09-20 10:59:27.453790390 +0200
 @@ -664,7 +664,7 @@ OFCondition DJLSEncoderBase::compressRaw
