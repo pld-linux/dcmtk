@@ -12,13 +12,13 @@ diff --git a/dcmjpls/apps/CMakeLists.txt b/dcmjpls/apps/CMakeLists.txt
 index 2e881d7..6170f8a 100644
 --- a/dcmjpls/apps/CMakeLists.txt
 +++ b/dcmjpls/apps/CMakeLists.txt
-@@ -8,5 +8,5 @@ ENDFOREACH(PROGRAM)
+@@ -8,5 +8,5 @@
  
  # make sure executables are linked to the corresponding libraries
- FOREACH(PROGRAM dcmcjpls dcmdjpls dcml2pnm)
+ foreach(PROGRAM dcmcjpls dcmdjpls dcml2pnm)
 -  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls charls dcmimage dcmimgle dcmdata oflog ofstd ofstd)
 +  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls ${CHARLS_LIBS} dcmimage dcmimgle dcmdata oflog ofstd ofstd)
- ENDFOREACH(PROGRAM)
+ endforeach()
 diff --git a/dcmjpls/libsrc/CMakeLists.txt b/dcmjpls/libsrc/CMakeLists.txt
 index 8a7b4e8..dc3ff44 100644
 --- a/dcmjpls/libsrc/CMakeLists.txt

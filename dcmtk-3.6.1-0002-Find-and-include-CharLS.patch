@@ -11,27 +11,24 @@ diff --git a/CMake/3rdparty.cmake b/CMake/3rdparty.cmake
 index 9fcca77..2ccda35 100755
 --- a/CMake/3rdparty.cmake
 +++ b/CMake/3rdparty.cmake
-@@ -267,6 +267,20 @@ ELSE(WIN32)
-     ENDIF(NOT WRAP_FOUND)
-   ENDIF(DCMTK_WITH_WRAP)
+@@ -357,6 +357,20 @@
+     endif()
+   endif()
  
-+  SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
++  set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 +  
-+  IF(DCMTK_WITH_CHARLS)
-+    FIND_PACKAGE(CharLS)
-+    INCLUDE_DIRECTORIES(${CHARLS_INCLUDE_DIRS})
-+    SET(CHARLS_LIBS ${CHARLS_LIBRARIES})
-+    IF (NOT CHARLS_LIBS)
-+      MESSAGE(STATUS "Warning: CharLS not found. Cannot build!")
-+    ELSE(NOT CHARLS_LIBS)
-+      MESSAGE(STATUS "Info: DCMTK CHARLS support will be enabled")
-+      SET(WITH_CHARLS 1)
-+    ENDIF(NOT CHARLS_LIBS)
-+  ENDIF(DCMTK_WITH_CHARLS)
++  if(DCMTK_WITH_CHARLS)
++    find_package(CharLS)
++    include_directories(${CHARLS_INCLUDE_DIRS})
++    set(CHARLS_LIBS ${CHARLS_LIBRARIES})
++    if (NOT CHARLS_LIBS)
++      message(STATUS "Warning: CharLS not found. Cannot build!")
++    else(NOT CHARLS_LIBS)
++      message(STATUS "Info: DCMTK CHARLS support will be enabled")
++      set(WITH_CHARLS 1)
++    endif(NOT CHARLS_LIBS)
++  endif(DCMTK_WITH_CHARLS)
 +
- ENDIF()
+ endif(WIN32 AND NOT MINGW)
  
- # Find doxygen
--- 
-1.9.3
-
+ if(NOT DEFINED DCMTK_WITH_STDLIBC_ICONV)

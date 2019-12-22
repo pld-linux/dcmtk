@@ -12,13 +12,10 @@ index e114663..c92ac5b 100644
 --- a/dcmjpls/CMakeLists.txt
 +++ b/dcmjpls/CMakeLists.txt
 @@ -2,6 +2,6 @@
- PROJECT(dcmjpls)
+ project(dcmjpls)
  
  # recurse into subdirectories
--FOREACH(SUBDIR libsrc libcharls apps include)
-+FOREACH(SUBDIR libsrc apps include)
-   ADD_SUBDIRECTORY(${SUBDIR})
- ENDFOREACH(SUBDIR)
--- 
-1.9.3
-
+-foreach(SUBDIR libsrc libcharls apps include)
++foreach(SUBDIR libsrc apps include)
+   add_subdirectory(${SUBDIR})
+ endforeach()

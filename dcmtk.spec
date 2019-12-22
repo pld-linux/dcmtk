@@ -1,17 +1,22 @@
 # TODO:
 # - use system libjpeg? (rather hard: it needs 8/12/16-bit versions; included libijg*
 #   are libjpeg 6b with some arithmetic and lossless patches applied;
-#   libjpeg 8 already inclded arithmetic encoding support, but not lossless)
+#   libjpeg 8 already included arithmetic encoding support, but not lossless)
 #
-Summary:	DICOM To:olkit - implementation of DICOM/MEDICOM standard
+# Conditional build:
+%bcond_without	icu	# use glibc iconv() instead of icu for charset conversion
+# glibc iconv supports only AbortTranscodingOnIllegalSequence conversion flag
+# icu supports AbortTranscodingOnIllegalSequence and DiscardIllegalSequences
+# standalone libiconv >= 1.8 supports additionally TransliterateIllegalSequences
+Summary:	DICOM Toolkit - implementation of DICOM/MEDICOM standard
 Summary(pl.UTF-8):	Narzędzia DICOM - implementacja standardu DICOM/MEDICOM
 Name:		dcmtk
-Version:	3.6.3
-Release:	3
+Version:	3.6.5
+Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	ftp://dicom.offis.de/pub/dicom/offis/software/dcmtk/dcmtk363/%{name}-%{version}.tar.gz
-# Source0-md5:	2f79082d52cbbb06a360f48b4a9c61be
+Source0:	https://dicom.offis.de/download/dcmtk/release/%{name}-%{version}.tar.gz
+# Source0-md5:	e19707f64ee5695c496b9c1e48e39d07
 Patch0:		%{name}-3.6.0-0005-Fixed-includes-for-CharLS-1.0.patch
 Patch1:		%{name}-3.6.1-0001-Removed-reference-to-bundled-libcharls.patch
 Patch2:		%{name}-3.6.1-0002-Find-and-include-CharLS.patch
@@ -19,17 +24,21 @@ Patch3:		%{name}-3.6.1-0003-Create-FindCharLS.cmake.patch
 Patch4:		%{name}-3.6.1-0004-Use-cmake-suggested-location-for-CharLS.patch
 Patch5:		%{name}-etc.patch
 Patch6:		CharLS.patch
-Patch7:		%{name}-fixes.patch
 URL:		http://dicom.offis.de/dcmtk
 BuildRequires:	CharLS-devel < 2.0
-BuildRequires:	cmake >= 2.4
-BuildRequires:	libicu-devel
+BuildRequires:	cmake >= 2.8.5
+BuildRequires:	doxygen
+%{?with_icu:BuildRequires:	libicu-devel}
 BuildRequires:	libpng-devel >= 2:1.2.8
+# handled during configuration, but actually not used
+#BuildRequires:	libsndfile-devel
 BuildRequires:	libstdc++-devel >= 6:4.8.1
 BuildRequires:	libtiff-devel >= 3.7.0
 BuildRequires:	libwrap-devel
 BuildRequires:	libxml2-devel >= 1:2.6.26
-BuildRequires:	openssl-devel >= 0.9.8
+BuildRequires:	openjpeg2-devel >= 2
+BuildRequires:	openssl-devel >= 1.0.1
+BuildRequires:	pkgconfig
 BuildRequires:	zlib-devel >= 1.2.3
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -47,6 +56,7 @@ Summary:	DICOM ToolKit shared libraries
 Summary(pl.UTF-8):	Biblioteki współdzielone DICOM
 Group:		Libraries
 Requires:	libstdc++ >= 6:4.8.1
+Requires:	openssl >= 1.0.1
 
 %description libs
 DICOM ToolKit shared libraries.
@@ -76,25 +86,28 @@ Pliki nagłówkowe bibliotek DCMTK.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 # enforce system CharLS
 %{__rm} -r dcmjpls/libcharls
 
 %build
-%cmake . \
-	-DDCMTK_INSTALL_ETCDIR=%{_sysconfdir}/%{name} \
-	-DDCMTK_INSTALL_LIBDIR=%{_lib} \
+install -d build
+cd build
+%cmake .. \
+	-DCMAKE_INSTALL_LIBDIR=%{_lib} \
 	-DDCMTK_INSTALL_CMKDIR=%{_lib}/cmake/dcmtk \
 	-DBUILD_APPS:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DDCMTK_ENABLE_CXX11:BOOL=ON \
 	-DDCMTK_USE_CXX11_STL:BOOL=ON \
+	-DDCMTK_WITH_CHARLS:BOOL=ON \
+	-DDCMTK_WITH_ICONV:BOOL=OFF \
+	%{!?with_icu:-DDCMTK_WITH_ICU:BOOL=OFF} \
 	-DDCMTK_WITH_OPENSSL:BOOL=ON \
 	-DDCMTK_WITH_PNG:BOOL=ON \
 	-DDCMTK_WITH_PRIVATE_TAGS:BOOL=ON \
 	-DDCMTK_WITH_TIFF:BOOL=ON \
 	-DDCMTK_WITH_XML:BOOL=ON \
-	-DDCMTK_WITH_CHARLS=ON \
 	-DDCMTK_WITH_ZLIB:BOOL=ON
 
 %{__make}
@@ -102,9 +115,10 @@ Pliki nagłówkowe bibliotek DCMTK.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# packaged as %doc
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}
 
 %clean
@@ -118,6 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ANNOUNCE CHANGES COPYRIGHT FAQ HISTORY README
 %doc dcmdata/docs/datadict.txt dcmnet/docs/asconfig.txt
 %doc dcmqrdb/docs/dcmqr*.txt dcmtls/docs/ciphers.txt
+%attr(755,root,root) %{_bindir}/cda2dcm
 %attr(755,root,root) %{_bindir}/dcm*
 %attr(755,root,root) %{_bindir}/dcod2lum
 %attr(755,root,root) %{_bindir}/dconvlum
@@ -136,6 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/msgserv
 %attr(755,root,root) %{_bindir}/ofstd_tests
 %attr(755,root,root) %{_bindir}/pdf2dcm
+%attr(755,root,root) %{_bindir}/stl2dcm
 %attr(755,root,root) %{_bindir}/storescp
 %attr(755,root,root) %{_bindir}/storescu
 %attr(755,root,root) %{_bindir}/termscu
@@ -152,6 +168,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dcmtk/storescp.cfg
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dcmtk/storescu.cfg
 %{_datadir}/dcmtk
+%{_mandir}/man1/cda2dcm.1*
 %{_mandir}/man1/dcm*.1*
 %{_mandir}/man1/dcod2lum.1*
 %{_mandir}/man1/dconvlum.1*
@@ -166,6 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/img2dcm.1*
 %{_mandir}/man1/movescu.1*
 %{_mandir}/man1/pdf2dcm.1*
+%{_mandir}/man1/stl2dcm.1*
 %{_mandir}/man1/storescp.1*
 %{_mandir}/man1/storescu.1*
 %{_mandir}/man1/termscu.1*
@@ -176,55 +194,55 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcmr.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcmr.so.13
+%attr(755,root,root) %ghost %{_libdir}/libcmr.so.15
 %attr(755,root,root) %{_libdir}/libdcmdata.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmdata.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmdata.so.15
 %attr(755,root,root) %{_libdir}/libdcmdsig.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmdsig.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmdsig.so.15
 %attr(755,root,root) %{_libdir}/libdcmfg.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmfg.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmfg.so.15
 %attr(755,root,root) %{_libdir}/libdcmimage.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmimage.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmimage.so.15
 %attr(755,root,root) %{_libdir}/libdcmimgle.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmimgle.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmimgle.so.15
 %attr(755,root,root) %{_libdir}/libdcmiod.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmiod.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmiod.so.15
 %attr(755,root,root) %{_libdir}/libdcmjpeg.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmjpeg.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmjpeg.so.15
 %attr(755,root,root) %{_libdir}/libdcmjpls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmjpls.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmjpls.so.15
 %attr(755,root,root) %{_libdir}/libdcmnet.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmnet.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmnet.so.15
 %attr(755,root,root) %{_libdir}/libdcmpstat.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmpstat.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmpstat.so.15
 %attr(755,root,root) %{_libdir}/libdcmqrdb.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmqrdb.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmqrdb.so.15
 %attr(755,root,root) %{_libdir}/libdcmrt.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmrt.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmrt.so.15
 %attr(755,root,root) %{_libdir}/libdcmseg.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmseg.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmseg.so.15
 %attr(755,root,root) %{_libdir}/libdcmpmap.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmpmap.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmpmap.so.15
 %attr(755,root,root) %{_libdir}/libdcmsr.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmsr.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmsr.so.15
 %attr(755,root,root) %{_libdir}/libdcmtract.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmtract.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmtract.so.15
 %attr(755,root,root) %{_libdir}/libdcmtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmtls.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmtls.so.15
 %attr(755,root,root) %{_libdir}/libdcmwlm.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdcmwlm.so.13
+%attr(755,root,root) %ghost %{_libdir}/libdcmwlm.so.15
 %attr(755,root,root) %{_libdir}/libi2d.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libi2d.so.13
+%attr(755,root,root) %ghost %{_libdir}/libi2d.so.15
 %attr(755,root,root) %{_libdir}/libijg12.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libijg12.so.13
+%attr(755,root,root) %ghost %{_libdir}/libijg12.so.15
 %attr(755,root,root) %{_libdir}/libijg16.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libijg16.so.13
+%attr(755,root,root) %ghost %{_libdir}/libijg16.so.15
 %attr(755,root,root) %{_libdir}/libijg8.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libijg8.so.13
+%attr(755,root,root) %ghost %{_libdir}/libijg8.so.15
 %attr(755,root,root) %{_libdir}/liboflog.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liboflog.so.13
+%attr(755,root,root) %ghost %{_libdir}/liboflog.so.15
 %attr(755,root,root) %{_libdir}/libofstd.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libofstd.so.13
+%attr(755,root,root) %ghost %{_libdir}/libofstd.so.15
 
 %files devel
 %defattr(644,root,root,755)
