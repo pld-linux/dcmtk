@@ -12,7 +12,7 @@ Summary:	DICOM Toolkit - implementation of DICOM/MEDICOM standard
 Summary(pl.UTF-8):	Narzędzia DICOM - implementacja standardu DICOM/MEDICOM
 Name:		dcmtk
 Version:	3.6.5
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries
 Source0:	https://dicom.offis.de/download/dcmtk/release/%{name}-%{version}.tar.gz
@@ -117,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# disable completeness check incompatible with split packaging
+%{__sed} -i -e '/^foreach(target .*IMPORT_CHECK_TARGETS/,/^endforeach/d; /^unset(_IMPORT_CHECK_TARGETS)/d' $RPM_BUILD_ROOT%{_libdir}/cmake/dcmtk/DCMTKTargets.cmake
 
 # packaged as %doc
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}
