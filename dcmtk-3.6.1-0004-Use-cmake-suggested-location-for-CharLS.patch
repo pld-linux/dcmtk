@@ -8,27 +8,20 @@ Subject: [PATCH] Use cmake suggested location for CharLS
  dcmjpls/libsrc/CMakeLists.txt | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/dcmjpls/apps/CMakeLists.txt b/dcmjpls/apps/CMakeLists.txt
-index 2e881d7..6170f8a 100644
---- a/dcmjpls/apps/CMakeLists.txt
-+++ b/dcmjpls/apps/CMakeLists.txt
-@@ -8,5 +8,5 @@
+--- dcmtk-3.6.6/dcmjpls/apps/CMakeLists.txt.orig	2021-08-28 22:06:28.200993561 +0200
++++ dcmtk-3.6.6/dcmjpls/apps/CMakeLists.txt	2021-08-29 12:52:13.793079185 +0200
+@@ -8,5 +8,5 @@ endforeach()
  
  # make sure executables are linked to the corresponding libraries
  foreach(PROGRAM dcmcjpls dcmdjpls dcml2pnm)
--  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls charls dcmimage dcmimgle dcmdata oflog ofstd ofstd)
+-  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls dcmtkcharls dcmimage dcmimgle dcmdata oflog ofstd ofstd)
 +  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls ${CHARLS_LIBS} dcmimage dcmimgle dcmdata oflog ofstd ofstd)
  endforeach()
-diff --git a/dcmjpls/libsrc/CMakeLists.txt b/dcmjpls/libsrc/CMakeLists.txt
-index 8a7b4e8..dc3ff44 100644
---- a/dcmjpls/libsrc/CMakeLists.txt
-+++ b/dcmjpls/libsrc/CMakeLists.txt
-@@ -4,4 +4,4 @@ INCLUDE_DIRECTORIES(${dcmjpls_SOURCE_DIR}/include ${ofstd_SOURCE_DIR}/include ${
+--- dcmtk-3.6.6/dcmjpls/libsrc/CMakeLists.txt.orig	2021-01-14 15:16:29.000000000 +0100
++++ dcmtk-3.6.6/dcmjpls/libsrc/CMakeLists.txt	2021-08-29 12:52:38.419612438 +0200
+@@ -4,4 +4,4 @@ include_directories("${dcmjpls_SOURCE_DI
  # create library from source files
  DCMTK_ADD_LIBRARY(dcmjpls djcparam djdecode djencode djrparam djcodecd djutils djcodece)
  
--DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage charls)
+-DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage dcmtkcharls)
 +DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage ${CHARLS_LIBS})
--- 
-1.9.3
-

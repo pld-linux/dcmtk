@@ -7,28 +7,26 @@ Subject: [PATCH] Find and include CharLS
  CMake/3rdparty.cmake | 14 ++++++++++++++
  1 file changed, 14 insertions(+)
 
-diff --git a/CMake/3rdparty.cmake b/CMake/3rdparty.cmake
-index 9fcca77..2ccda35 100755
---- a/CMake/3rdparty.cmake
-+++ b/CMake/3rdparty.cmake
-@@ -357,6 +357,20 @@
-     endif()
+--- dcmtk-3.6.6/CMake/3rdparty.cmake.orig	2021-08-28 21:45:58.647654623 +0200
++++ dcmtk-3.6.6/CMake/3rdparty.cmake	2021-08-28 22:05:55.184505760 +0200
+@@ -411,6 +411,20 @@ if(DCMTK_WITH_DOXYGEN)
    endif()
+ endif()
  
-+  set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
-+  
-+  if(DCMTK_WITH_CHARLS)
-+    find_package(CharLS)
-+    include_directories(${CHARLS_INCLUDE_DIRS})
-+    set(CHARLS_LIBS ${CHARLS_LIBRARIES})
-+    if (NOT CHARLS_LIBS)
-+      message(STATUS "Warning: CharLS not found. Cannot build!")
-+    else(NOT CHARLS_LIBS)
-+      message(STATUS "Info: DCMTK CHARLS support will be enabled")
-+      set(WITH_CHARLS 1)
-+    endif(NOT CHARLS_LIBS)
-+  endif(DCMTK_WITH_CHARLS)
++set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 +
- endif(WIN32 AND NOT MINGW)
- 
- if(NOT DEFINED DCMTK_WITH_STDLIBC_ICONV)
++if(DCMTK_WITH_CHARLS)
++  find_package(CharLS)
++  include_directories(${CHARLS_INCLUDE_DIRS})
++  set(CHARLS_LIBS ${CHARLS_LIBRARIES})
++  if (NOT CHARLS_LIBS)
++    message(STATUS "Warning: CharLS not found. Cannot build!")
++  else(NOT CHARLS_LIBS)
++    message(STATUS "Info: DCMTK CHARLS support will be enabled")
++    set(WITH_CHARLS 1)
++  endif(NOT CHARLS_LIBS)
++endif(DCMTK_WITH_CHARLS)
++
+ if(DCMTK_WITH_ICONV OR DCMTK_WITH_STDLIBC_ICONV)
+   include(CheckCXXSourceCompiles)
+   set(CMAKE_REQUIRED_INCLUDES ${LIBICONV_INCDIR})
