@@ -17,11 +17,11 @@ Subject: [PATCH] Use cmake suggested location for CharLS
 -  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls dcmtkcharls dcmimage dcmimgle dcmdata oflog ofstd ofstd)
 +  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls ${CHARLS_LIBS} dcmimage dcmimgle dcmdata oflog ofstd ofstd)
  endforeach()
---- dcmtk-3.6.6/dcmjpls/libsrc/CMakeLists.txt.orig	2021-01-14 15:16:29.000000000 +0100
-+++ dcmtk-3.6.6/dcmjpls/libsrc/CMakeLists.txt	2021-08-29 12:52:38.419612438 +0200
-@@ -4,4 +4,4 @@ include_directories("${dcmjpls_SOURCE_DI
- # create library from source files
- DCMTK_ADD_LIBRARY(dcmjpls djcparam djdecode djencode djrparam djcodecd djutils djcodece)
+--- dcmtk-3.6.7/dcmjpls/libsrc/CMakeLists.txt.orig	2023-04-25 21:19:43.920918726 +0200
++++ dcmtk-3.6.7/dcmjpls/libsrc/CMakeLists.txt	2023-04-25 21:20:49.623896115 +0200
+@@ -12,4 +12,4 @@ DCMTK_ADD_LIBRARY(dcmjpls
+   djcodece.cc
+ )
  
 -DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage dcmtkcharls)
 +DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage ${CHARLS_LIBS})

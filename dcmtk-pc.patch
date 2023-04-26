@@ -1,0 +1,11 @@
+--- dcmtk-3.6.7/CMake/dcmtk.pc.in.orig	2022-04-28 15:47:25.000000000 +0200
++++ dcmtk-3.6.7/CMake/dcmtk.pc.in	2023-04-26 06:15:57.547750811 +0200
+@@ -1,7 +1,7 @@
+  prefix="@CMAKE_INSTALL_PREFIX@"
+  exec_prefix="${prefix}"
+  libdir="${prefix}/@CMAKE_INSTALL_LIBDIR@"
+- includedir="${prefix}/include/"
++ includedir="${prefix}/include"
+ 
+  Name: DCMTK
+  Description: DICOM Toolkit (DCMTK)
