@@ -12,7 +12,7 @@ Summary:	DICOM Toolkit - implementation of DICOM/MEDICOM standard
 Summary(pl.UTF-8):	Narzędzia DICOM - implementacja standardu DICOM/MEDICOM
 Name:		dcmtk
 Version:	3.6.7
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 Source0:	https://nero.offis.de/download/dcmtk/release/%{name}-%{version}.tar.gz
