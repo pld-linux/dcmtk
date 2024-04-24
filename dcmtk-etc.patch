@@ -1,11 +1,11 @@
---- dcmtk-3.6.5/CMake/GenerateDCMTKConfigure.cmake.orig	2019-12-17 21:15:50.393593359 +0100
-+++ dcmtk-3.6.5/CMake/GenerateDCMTKConfigure.cmake	2019-12-17 21:17:34.619695384 +0100
-@@ -164,7 +164,7 @@
-     set(DCM_DICT_DEFAULT_PATH "")
-   endif()
-   # Set default directory for configuration and support data.
--  set(DCMTK_DEFAULT_CONFIGURATION_DIR "${DCMTK_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/dcmtk/")
-+  set(DCMTK_DEFAULT_CONFIGURATION_DIR "${CMAKE_INSTALL_FULL_SYSCONFDIR}/dcmtk/")
-   set(DCMTK_DEFAULT_SUPPORT_DATA_DIR "${DCMTK_PREFIX}/${CMAKE_INSTALL_DATADIR}/dcmtk/")
- endif()
+--- dcmtk-3.6.8/CMake/GenerateDCMTKConfigure.cmake.orig	2023-12-19 11:12:57.000000000 +0100
++++ dcmtk-3.6.8/CMake/GenerateDCMTKConfigure.cmake	2024-04-24 19:35:36.709413667 +0200
+@@ -202,7 +202,7 @@ else()
+ 
+   # Modify the installation paths for configuration files, data files and documents
+   # by adding a subdirectory with the DCMTK name and version number
+-  set(CMAKE_INSTALL_FULL_SYSCONFDIR "${CMAKE_INSTALL_FULL_SYSCONFDIR}/dcmtk-${DCMTK_COMPLETE_PACKAGE_VERSION}")
++  set(CMAKE_INSTALL_FULL_SYSCONFDIR "${CMAKE_INSTALL_FULL_SYSCONFDIR}/dcmtk")
+   set(CMAKE_INSTALL_FULL_DATADIR "${CMAKE_INSTALL_FULL_DATADIR}/dcmtk-${DCMTK_COMPLETE_PACKAGE_VERSION}")
+   set(CMAKE_INSTALL_FULL_DOCDIR "${CMAKE_INSTALL_FULL_DOCDIR}-${DCMTK_COMPLETE_PACKAGE_VERSION}")
  

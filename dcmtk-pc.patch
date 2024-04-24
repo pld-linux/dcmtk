@@ -1,11 +1,24 @@
---- dcmtk-3.6.7/CMake/dcmtk.pc.in.orig	2022-04-28 15:47:25.000000000 +0200
-+++ dcmtk-3.6.7/CMake/dcmtk.pc.in	2023-04-26 06:15:57.547750811 +0200
+--- dcmtk-3.6.8/CMake/dcmtk.pc.in.orig	2024-04-24 18:54:10.376541770 +0200
++++ dcmtk-3.6.8/CMake/dcmtk.pc.in	2024-04-24 18:58:01.498232007 +0200
 @@ -1,7 +1,7 @@
-  prefix="@CMAKE_INSTALL_PREFIX@"
-  exec_prefix="${prefix}"
-  libdir="${prefix}/@CMAKE_INSTALL_LIBDIR@"
-- includedir="${prefix}/include/"
-+ includedir="${prefix}/include"
+-prefix="@CMAKE_INSTALL_PREFIX@"
+-exec_prefix="${prefix}"
+-libdir="@CMAKE_INSTALL_FULL_LIBDIR@"
+-includedir="${prefix}/include/"
++prefix=@CMAKE_INSTALL_PREFIX@
++exec_prefix=${prefix}
++libdir=@CMAKE_INSTALL_FULL_LIBDIR@
++includedir=${prefix}/include
  
-  Name: DCMTK
-  Description: DICOM Toolkit (DCMTK)
+ Name: DCMTK
+ Description: DICOM Toolkit (DCMTK)
+@@ -9,6 +9,6 @@ URL: https://dcmtk.org
+ Version: @DCMTK_MAJOR_VERSION@.@DCMTK_MINOR_VERSION@.@DCMTK_BUILD_VERSION@
+ Requires: @PKGCONF_REQ_PUB@
+ Requires.private: @PKGCONF_REQ_PRIV@
+-Cflags: -I"${includedir}"
+-Libs: -L"${libdir}" @PKGCONF_LIBS@
+-Libs.private: -L"${libdir}" @PKGCONF_LIBS_PRIV@
++Cflags: -I${includedir}
++Libs: -L${libdir} @PKGCONF_LIBS@
++Libs.private: -L${libdir} @PKGCONF_LIBS_PRIV@
