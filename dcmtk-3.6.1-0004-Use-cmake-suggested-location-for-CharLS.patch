@@ -20,7 +20,7 @@ Subject: [PATCH] Use cmake suggested location for CharLS
 --- dcmtk-3.6.7/dcmjpls/libsrc/CMakeLists.txt.orig	2023-04-25 21:19:43.920918726 +0200
 +++ dcmtk-3.6.7/dcmjpls/libsrc/CMakeLists.txt	2023-04-25 21:20:49.623896115 +0200
 @@ -12,4 +12,4 @@ DCMTK_ADD_LIBRARY(dcmjpls
-   djcodece.cc
+   dipijpls.cc
  )
  
 -DCMTK_TARGET_LINK_MODULES(dcmjpls ofstd oflog dcmdata dcmimgle dcmimage dcmtkcharls)

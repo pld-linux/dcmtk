@@ -22,3 +22,14 @@ won't fit (if so, CharLS throws exception).
    result = DJLSError::convert(err);
  
    if (result.good())
+--- dcmtk-3.6.9/dcmjpls/libsrc/dipijpls.cc.orig	2025-01-21 12:54:13.832127366 +0100
++++ dcmtk-3.6.9/dcmjpls/libsrc/dipijpls.cc	2025-01-21 17:12:47.821354842 +0100
+@@ -92,7 +92,7 @@
+     BYTE *compressed_buffer = new BYTE[compressed_buffer_size];
+     size_t bytesWritten = 0;
+ 
+-    JLS_ERROR err = JpegLsEncode(&compressed_buffer, &compressed_buffer_size, &bytesWritten, data, data_size, &jls_params);
++    JLS_ERROR err = JpegLsEncode(&compressed_buffer, compressed_buffer_size, &bytesWritten, data, data_size, &jls_params);
+     OFCondition cond = DJLSError::convert(err);
+ 
+     if (cond.good())
