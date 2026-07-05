@@ -8,14 +8,14 @@ Subject: [PATCH] Use cmake suggested location for CharLS
  dcmjpls/libsrc/CMakeLists.txt | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
---- dcmtk-3.6.6/dcmjpls/apps/CMakeLists.txt.orig	2021-08-28 22:06:28.200993561 +0200
-+++ dcmtk-3.6.6/dcmjpls/apps/CMakeLists.txt	2021-08-29 12:52:13.793079185 +0200
+--- dcmtk-3.7.0/dcmjpls/apps/CMakeLists.txt.orig	2025-12-15 08:28:13.000000000 +0100
++++ dcmtk-3.7.0/dcmjpls/apps/CMakeLists.txt	2026-07-05 17:58:54.455817206 +0200
 @@ -8,5 +8,5 @@ endforeach()
  
  # make sure executables are linked to the corresponding libraries
  foreach(PROGRAM dcmcjpls dcmdjpls dcml2pnm)
--  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls dcmtkcharls dcmimage dcmimgle dcmdata oflog ofstd ofstd)
-+  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls ${CHARLS_LIBS} dcmimage dcmimgle dcmdata oflog ofstd ofstd)
+-  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls dcmtkcharls dcmimage)
++  DCMTK_TARGET_LINK_MODULES(${PROGRAM} dcmjpls ${CHARLS_LIBS} dcmimage)
  endforeach()
 --- dcmtk-3.6.7/dcmjpls/libsrc/CMakeLists.txt.orig	2023-04-25 21:19:43.920918726 +0200
 +++ dcmtk-3.6.7/dcmjpls/libsrc/CMakeLists.txt	2023-04-25 21:20:49.623896115 +0200

@@ -26,7 +26,7 @@ diff --git a/dcmjpls/libsrc/djcodece.cc b/dcmjpls/libsrc/djcodece.cc
 index 9d6e1d8..8148b31 100644
 --- a/dcmjpls/libsrc/djcodece.cc
 +++ b/dcmjpls/libsrc/djcodece.cc
-@@ -62,7 +62,7 @@
+@@ -52,7 +52,7 @@
  #include "dcmtk/dcmimgle/dcmimage.h"  /* for class DicomImage */
  
  // JPEG-LS library (CharLS) includes
@@ -34,7 +34,7 @@ index 9d6e1d8..8148b31 100644
 +#include "CharLS/interface.h"
  
  BEGIN_EXTERN_C
- #ifdef HAVE_FCNTL_H
+ #include <fcntl.h>       /* for O_RDONLY */
 diff --git a/dcmjpls/libsrc/djerror.h b/dcmjpls/libsrc/djerror.h
 index 68ebae1..d3cd2ad 100644
 --- a/dcmjpls/libsrc/djerror.h
@@ -62,3 +62,5 @@ index 68ebae1..d3cd2ad 100644
  
  /*---------------------------------*
   *  constructors and mode setting  *
+--- ../BUILD/dcmtk-3.7.0/dcmjpls/libsrc/djcodece.cc.orig	2025-12-15 08:28:13.000000000 +0100
++++ ../BUILD/dcmtk-3.7.0/dcmjpls/libsrc/djcodece.cc	2026-07-05 17:53:06.487702312 +0200
